@@ -15,23 +15,31 @@
 @property (nonatomic) CardMatchingGame* game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UIButton *resetGameButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentGameType;
 @end
 
 @implementation CardGameViewController
 
 - (IBAction)touchCardButton:(UIButton *)sender {
-    int chosenCardIndex = [self.cardButtons indexOfObject:sender];
+    NSUInteger chosenCardIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenCardIndex];
+    self.segmentGameType.enabled = NO;
     [self updateUI];
+}
+- (IBAction)touchSegmentedGameType:(UISegmentedControl *)sender {
+    NSUInteger matchCount = [sender selectedSegmentIndex]+2;
+    NSLog(@"touchSegmentedGameType: setting matchCount to %lu", matchCount);
+    self.game.matchCount = matchCount;
 }
 
 -(void) updateUI {
     for (UIButton *cardButton in self.cardButtons){
-        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+        NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
         [self changeCard:cardButton toCard: card];
     }
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
 }
 
 - (void) changeCard:(UIButton*) button toCard:(Card*)card {
@@ -51,11 +59,18 @@
 }
 
 - (Deck*) createDeck {
-    return [[PlayingCardDeck alloc]init];
+    return [[PlayingCardDeck alloc] init];
+}
+
+- (IBAction)touchResetGameButton:(id)sender {
+    _game = nil;
+    self.segmentGameType.enabled = YES;
+    [self updateUI];
 }
 
 - (CardMatchingGame*) game{
     if (!_game) {
+        NSLog(@"Generating a game");
         _game = [[CardMatchingGame alloc]initWithCardCount:[self.cardButtons count]
                                                  usingdeck:[self createDeck]];
     }

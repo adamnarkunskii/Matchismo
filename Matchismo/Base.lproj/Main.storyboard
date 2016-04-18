@@ -168,7 +168,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0H-uw-UeO">
-                                <rect key="frame" x="20" y="436" width="280" height="40"/>
+                                <rect key="frame" x="164" y="525" width="136" height="40"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -183,11 +183,35 @@
                                     <action selector="touchCardButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B7w-rR-Wx6"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aig-Yy-u76">
+                                <rect key="frame" x="20" y="523" width="136" height="43"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="28"/>
+                                <state key="normal" title="Deal">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchResetGameButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PFy-yq-eeV"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vV2-3e-Gvq">
+                                <rect key="frame" x="20" y="494" width="136" height="29"/>
+                                <segments>
+                                    <segment title="2-Card"/>
+                                    <segment title="3-Card"/>
+                                </segments>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="touchSegmentedGameType:" destination="BYZ-38-t0r" eventType="valueChanged" id="d3P-CX-tqo"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="resetGameButton" destination="Aig-Yy-u76" id="bte-cj-fgQ"/>
                         <outlet property="scoreLabel" destination="h0H-uw-UeO" id="res-gs-ze8"/>
+                        <outlet property="segmentGameType" destination="vV2-3e-Gvq" id="DF0-U9-9Fn"/>
                         <outletCollection property="cardButtons" destination="zMO-Pg-FJg" id="bad-iK-Kkk"/>
                         <outletCollection property="cardButtons" destination="zDu-kQ-XJI" id="ELX-zP-E0Q"/>
                         <outletCollection property="cardButtons" destination="g3g-Pi-cWr" id="TjD-Gg-Sss"/>
@@ -214,4 +238,5 @@
     <resources>
         <image name="cardback" width="64" height="96"/>
     </resources>
+    <color key="tintColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
