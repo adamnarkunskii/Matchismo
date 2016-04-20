@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B69C8E071CC7A2970048F1A8 /* PlayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B69C8E061CC7A2970048F1A8 /* PlayLog.m */; };
 		B6D26F161CB6C396005F3766 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D26F151CB6C396005F3766 /* CardMatchingGame.m */; };
 		B6E72D8E1CB56C280037F1DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E72D8D1CB56C280037F1DF /* main.m */; };
 		B6E72D911CB56C280037F1DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E72D901CB56C280037F1DF /* AppDelegate.m */; };
@@ -40,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B69C8E051CC7A2970048F1A8 /* PlayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayLog.h; path = Matchismo/Model/PlayLog.h; sourceTree = "<group>"; };
+		B69C8E061CC7A2970048F1A8 /* PlayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayLog.m; path = Matchismo/Model/PlayLog.m; sourceTree = "<group>"; };
 		B6D26F141CB6C396005F3766 /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardMatchingGame.h; path = Matchismo/Model/CardMatchingGame.h; sourceTree = "<group>"; };
 		B6D26F151CB6C396005F3766 /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardMatchingGame.m; path = Matchismo/Model/CardMatchingGame.m; sourceTree = "<group>"; };
 		B6E72D891CB56C280037F1DF /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +172,8 @@
 				B6E72DCA1CB594390037F1DF /* Card.m */,
 				B6E72D921CB56C280037F1DF /* CardGameViewController.h */,
 				B6E72D931CB56C280037F1DF /* CardGameViewController.m */,
+				B69C8E051CC7A2970048F1A8 /* PlayLog.h */,
+				B69C8E061CC7A2970048F1A8 /* PlayLog.m */,
 			);
 			name = Model;
 			path = ..;
@@ -308,6 +313,7 @@
 				B6E72D941CB56C280037F1DF /* CardGameViewController.m in Sources */,
 				B6E72D911CB56C280037F1DF /* AppDelegate.m in Sources */,
 				B6E72D8E1CB56C280037F1DF /* main.m in Sources */,
+				B69C8E071CC7A2970048F1A8 /* PlayLog.m in Sources */,
 				B6E72DD21CB624BD0037F1DF /* PlayingCard.m in Sources */,
 				B6D26F161CB6C396005F3766 /* CardMatchingGame.m in Sources */,
 				B6E72DD81CB62D950037F1DF /* PlayingCardDeck.m in Sources */,

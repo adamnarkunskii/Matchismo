@@ -10,11 +10,13 @@
 #import "Deck.h"
 #import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
+#import "PlayLog.h"
 
 @interface CardGameViewController ()
 @property (nonatomic) CardMatchingGame* game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playLogLabel;
 @property (weak, nonatomic) IBOutlet UIButton *resetGameButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentGameType;
 @end
@@ -28,7 +30,11 @@
     [self updateUI];
 }
 - (IBAction)touchSegmentedGameType:(UISegmentedControl *)sender {
-    NSUInteger matchCount = [sender selectedSegmentIndex]+2;
+    [self updateGameConfiguration];
+}
+
+-(void)updateGameConfiguration {
+    NSUInteger matchCount = [self.segmentGameType selectedSegmentIndex]+2;
     self.game.matchCount = matchCount;
 }
 
@@ -39,6 +45,26 @@
         [self changeCard:cardButton toCard: card];
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+    self.playLogLabel.text = [self getMessageFrom:self.game.lastPlayLog];
+}
+
+-(NSString*) getMessageFrom:(PlayLog*)log{
+    if (!log){
+        return @"";
+    }
+    NSMutableArray* cardContents = [[NSMutableArray alloc] init];
+    for (Card* card in log.cards){
+        [cardContents addObject:card.contents];
+    }
+    NSString* cards = [cardContents componentsJoinedByString:@""];
+    NSString* format;
+    if(log.score > 0){
+        format = @"Matched %@ for %d points!";
+    } else {
+        format = @"%@ doesn't match! %d points penalty haha u sux";
+    }
+    
+    return [NSString stringWithFormat:format, cards, log.score];
 }
 
 - (void) changeCard:(UIButton*) button toCard:(Card*)card {
@@ -64,6 +90,7 @@
 - (IBAction)touchResetGameButton:(id)sender {
     _game = nil;
     self.segmentGameType.enabled = YES;
+    [self updateGameConfiguration];
     [self updateUI];
 }
 

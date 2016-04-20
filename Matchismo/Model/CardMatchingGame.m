@@ -11,12 +11,12 @@
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic) NSMutableArray *cards;
+@property (nonatomic, readwrite) PlayLog* lastPlayLog;
 @end
 
 @implementation CardMatchingGame
 
 static const int MISMATCH_PENALTY = 2;
-static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
 
 
@@ -26,33 +26,49 @@ static const int COST_TO_CHOOSE = 1;
         if (card.isChosen) {
             card.chosen = NO;
         } else {
-            // match against other cards
-            NSMutableArray *otherChosenCards = [[NSMutableArray alloc] init];
+            card.chosen = YES;
+            self.score -= COST_TO_CHOOSE;
+
+            NSMutableArray *chosenCards = [[NSMutableArray alloc] init];
             for (Card* otherCard in self.cards){
                 if (otherCard.isChosen && !otherCard.isMatched) {
-                    [otherChosenCards addObject:otherCard];
+                    [chosenCards addObject:otherCard];
                 }
             }
             
-            NSLog(@"otherChosenCards.count = %lu", otherChosenCards.count);
-            
-            if (otherChosenCards.count == self.matchCount - 1) {
-                for (Card* otherCard in self.cards) {
-                    if (otherCard.isChosen && !otherCard.isMatched) {
-                        int matchScore = [card match:@[otherCard]];
-                        if (matchScore) {
-                            self.score += matchScore * MATCH_BONUS;
-                            card.matched = YES;
-                            otherCard.matched = YES;
-                        } else {
-                            self.score -= MISMATCH_PENALTY;
-                            otherCard.chosen = NO;
-                        }
+            if (chosenCards.count == self.matchCount) {
+                int matchScore = 0;
+                int matchCount = 0;
+                for (Card* chosenCard in chosenCards){
+                    NSMutableArray* cardsToMatchAgainst = [[NSMutableArray alloc] initWithArray:chosenCards];
+                    [cardsToMatchAgainst removeObject:chosenCard];
+                    matchScore += [chosenCard match:cardsToMatchAgainst];
+                    if (matchScore != 0){
+                        matchCount++;
                     }
                 }
+                
+                if (matchScore != 0){
+                    for (Card* card in chosenCards){
+                        card.matched = YES;
+                    }
+                    self.score = matchScore * matchCount;
+                } else {
+                    for (Card* card in chosenCards){
+                        card.chosen = NO;
+                    }
+                    
+                    matchScore = -MISMATCH_PENALTY;
+                }
+                
+                self.score += matchScore;
+                
+                PlayLog* log = [[PlayLog alloc] init];
+                log.cards = [[NSMutableArray alloc] initWithArray:chosenCards];
+                log.score = matchScore;
+                self.lastPlayLog = log;
+                
             }
-            self.score -= COST_TO_CHOOSE;
-            card.chosen = YES;
         }
     }
 }

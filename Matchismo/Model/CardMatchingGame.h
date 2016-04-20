@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
+#import "PlayLog.h"
 
 @interface CardMatchingGame : NSObject
 
@@ -20,5 +21,6 @@
 
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic) NSUInteger matchCount;
+@property (nonatomic, readonly) PlayLog* lastPlayLog;
 
 @end
