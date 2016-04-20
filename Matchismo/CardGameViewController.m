@@ -29,7 +29,6 @@
 }
 - (IBAction)touchSegmentedGameType:(UISegmentedControl *)sender {
     NSUInteger matchCount = [sender selectedSegmentIndex]+2;
-    NSLog(@"touchSegmentedGameType: setting matchCount to %lu", matchCount);
     self.game.matchCount = matchCount;
 }
 
@@ -70,7 +69,6 @@
 
 - (CardMatchingGame*) game{
     if (!_game) {
-        NSLog(@"Generating a game");
         _game = [[CardMatchingGame alloc]initWithCardCount:[self.cardButtons count]
                                                  usingdeck:[self createDeck]];
     }

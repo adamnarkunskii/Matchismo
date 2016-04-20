@@ -25,20 +25,30 @@ static const int COST_TO_CHOOSE = 1;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
-        }else{
+        } else {
             // match against other cards
-            for (Card* otherCard in self.cards) {
+            NSMutableArray *otherChosenCards = [[NSMutableArray alloc] init];
+            for (Card* otherCard in self.cards){
                 if (otherCard.isChosen && !otherCard.isMatched) {
-                    int matchScore = [card match:@[otherCard]];
-                    if (matchScore) {
-                        self.score += matchScore * MATCH_BONUS;
-                        card.matched = YES;
-                        otherCard.matched = YES;
-                    } else {
-                        self.score -= MISMATCH_PENALTY;
-                        otherCard.chosen = NO;
+                    [otherChosenCards addObject:otherCard];
+                }
+            }
+            
+            NSLog(@"otherChosenCards.count = %lu", otherChosenCards.count);
+            
+            if (otherChosenCards.count == self.matchCount - 1) {
+                for (Card* otherCard in self.cards) {
+                    if (otherCard.isChosen && !otherCard.isMatched) {
+                        int matchScore = [card match:@[otherCard]];
+                        if (matchScore) {
+                            self.score += matchScore * MATCH_BONUS;
+                            card.matched = YES;
+                            otherCard.matched = YES;
+                        } else {
+                            self.score -= MISMATCH_PENALTY;
+                            otherCard.chosen = NO;
+                        }
                     }
-                    break; // allow only two cards to be matched for now
                 }
             }
             self.score -= COST_TO_CHOOSE;
@@ -55,9 +65,10 @@ static const int COST_TO_CHOOSE = 1;
 }
 
 - (instancetype) initWithCardCount:(NSUInteger)count
-                         usingdeck:(Deck *)deck {
+                         usingdeck:(Deck *)deck{
     self = [super init];
     if (self){
+        self.matchCount = 2;
         for (int i = 0; i < count; i++) {
             Card *card = [deck drawRandomCard];
             if (card) {
